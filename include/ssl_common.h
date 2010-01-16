@@ -37,24 +37,61 @@
  *  those of the authors and should not be interpreted as representing official 
  *  policies, either expressed or implied, of Kyle Isom. 
  */
- 
+
+#ifndef __SSLCOMMON_H
+#define __SSLCOMMON_H
+
  #include <openssl/bio.h>
  #include <openssl/err.h>
  #include <openssl/ssl.h>
+ #include <sys/types.h>
+ #include <sys/socket.h>
+ #include <netinet/in.h>
+ #include <arpa/inet.h>
+ #include <netdb.h>
  #include <errno.h>
  #include <signal.h>
  #include <stdio.h>
  #include <stdlib.h>
  #include <unistd.h>
  
+ 
+ // SSL function return codes
  #define SSL_SUCCESS                0
  #define CONNECT_ERROR              1
  #define CLEAN_SSL_DISCONNECT       2
  #define UNCLEAN_SSL_DISCONNECT     3
  
+ 
+ // BIO function return codes
+ #define BIO_SUCCESS                0
+ #define BIO_CLOSE                  1
+ #define BIO_ERR                    2
+ 
  #define SSL_TIMEOUT                1
      
+ /* 
+  * function bio_connect
+  * input:
+  *     char *hostip: a host string in the form of an IPv4 address
+  *     int port: an integer representing the port to connect to
+  *     BIO *bp: a pointer to a BIO
+  * output:
+  *     returns BIO error code based on success / failure of the connection
+  *     attempt.
+  */
+ int bio_connect(char *hostip, int port, BIO *bp);
  
+ /*
+  * function bio_destroy:
+  * Wrapper to BIO_free written to fit the naming scheme of the library.
+  * input:
+  *     BIO *bp: a pointer to a BIO
+  * output:
+  *     BIO error code
+  */
+  
+ /*
  SSL_CTX* initialize_ctx(void);
  //SSL_CTX* init_ctx(char *keyfile, char *pass);    // need to work on authenticating SSL
  int ssl_connect(char *hostip, int port, BIO *bp, SSL_CTX *ctx, SSL *sslp);
@@ -62,3 +99,6 @@
  int destroy_ssl(BIO *bp, SSL_CTX *ctx, SSL *sslp);
  char *get_hoststr(char* host, int port);
  int process_SSL_error(SSL *sslr);
+ */
+ 
+#endif

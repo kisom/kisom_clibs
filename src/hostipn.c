@@ -9,7 +9,7 @@
  * Released under a BSD license. See header for full license.
  */
 
-#include "hostipn.h"
+#include <kisom/hostipn.h>
 
 int is_host_ip(const char *host) {
     int i = 0, j = 0;
